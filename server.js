@@ -1,9 +1,12 @@
 // server.js
 import express from "express";
-import { translateText } from "./src/index.mjs"; 
+import * as deepl from "deepl-node";
 
 const app = express();
 const port = process.env.PORT || 8080;
+
+const authKey = process.env.DEEPL_API_KEY; 
+const translator = new deepl.Translator(authKey);
 
 app.use(express.json());
 
@@ -14,11 +17,11 @@ app.post("/translate", async (req, res) => {
       return res.status(400).json({ error: "Missing text or targetLang" });
     }
 
-    const translated = await translateText(text, targetLang);
-    res.json({ translated });
+    const result = await translator.translateText(text, null, targetLang);
+    res.json({ translated: result.text });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Translation failed" });
+    res.status(500).json({ error: "Translation failed", details: err.message });
   }
 });
 
