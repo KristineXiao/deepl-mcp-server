@@ -1,4 +1,5 @@
 // http-server.js
+console.log(">>> Running latest http-server.js <<<");
 import express from "express";
 import bodyParser from "body-parser";
 import { Server } from "@modelcontextprotocol/sdk/dist/server.js";
