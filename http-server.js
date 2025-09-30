@@ -1,14 +1,36 @@
 // http-server.js
 import express from "express";
 import bodyParser from "body-parser";
-import { DeepLMcpServer } from "./src/index.mjs";
+import { Server } from "@modelcontextprotocol/sdk/server";
+import { z } from "zod";
+import * as deepl from "deepl-node";
+
+const translator = new deepl.Translator(process.env.DEEPL_API_KEY);
+
+const server = new Server(
+  { name: "deepl-mcp", version: "1.0.0" },
+  {
+    capabilities: {
+      tools: {},
+    },
+  }
+);
+
+server.tool(
+  "translate",
+  "Translate text with DeepL",
+  z.object({
+    text: z.string(),
+    target_lang: z.string(),
+  }),
+  async ({ text, target_lang }) => {
+    const result = await translator.translateText(text, null, target_lang);
+    return { result: result.text };
+  }
+);
 
 const app = express();
 app.use(bodyParser.json());
-
-const server = new DeepLMcpServer({
-  apiKey: process.env.DEEPL_API_KEY,  
-});
 
 app.post("/mcp", async (req, res) => {
   try {
