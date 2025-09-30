@@ -1,3 +1,4 @@
+# force rebuild v2
 # Dockerfile for DeepL MCP Server
 FROM node:20-alpine  
 
