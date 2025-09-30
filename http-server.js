@@ -1,7 +1,7 @@
 // http-server.js
 import express from "express";
 import bodyParser from "body-parser";
-import { DeepLMcpServer } from "./dist/index.js"; 
+import { DeepLMcpServer } from "./src/index.mjs";
 
 const app = express();
 app.use(bodyParser.json());
