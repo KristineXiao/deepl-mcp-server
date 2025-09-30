@@ -1,7 +1,7 @@
 // http-server.js
 import express from "express";
 import bodyParser from "body-parser";
-import { Server } from "@modelcontextprotocol/sdk/server";
+import { Server } from "@modelcontextprotocol/sdk/dist/esm/server.js";
 import { z } from "zod";
 import * as deepl from "deepl-node";
 
