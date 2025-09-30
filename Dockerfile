@@ -12,5 +12,6 @@ RUN npm install --production
 # Bundle app source
 COPY . .
 
-# Expose stdio run directly
-CMD ["node", "src/index.mjs"]
+# Expose HTTP run
+CMD ["npm", "start"]
+
